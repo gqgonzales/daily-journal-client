@@ -9,51 +9,51 @@ export const EntryContext = React.createContext();
 /*
  This component establishes what data can be used.
  */
-export const EntryProvider = props => {
+export const EntryProvider = (props) => {
   const [entries, setEntries] = useState([]);
-  const [entry, setEntry] = useState({})
+  const [entry, setEntry] = useState({});
 
   const getEntries = () => {
     return fetch("http://localhost:8088/entries")
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setEntries);
   };
 
   const searchEntries = (searchTerm) => {
     return fetch(`http://localhost:8088/entries?q=${searchTerm}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setEntries);
   };
 
-  const getEntryById = id => {
+  const getEntryById = (id) => {
     return fetch(`http://localhost:8088/entries/${id}`)
-      .then(res => res.json())
-      .then(setEntry);;
+      .then((res) => res.json())
+      .then(setEntry);
   };
 
-  const addEntry = Entry => {
+  const addEntry = (Entry) => {
     return fetch("http://localhost:8088/entries", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(Entry)
+      body: JSON.stringify(Entry),
     }).then(getEntries);
   };
 
-  const deleteEntry = entry => {
+  const deleteEntry = (entry) => {
     return fetch(`http://localhost:8088/entries/${entry.id}`, {
-      method: "DELETE"
+      method: "DELETE",
     }).then(getEntries);
   };
 
-  const updateEntry = entry => {
+  const updateEntry = (entry) => {
     return fetch(`http://localhost:8088/entries/${entry.id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(entry)
+      body: JSON.stringify(entry),
     }).then(getEntries);
   };
 
@@ -68,7 +68,7 @@ export const EntryProvider = props => {
         getEntryById,
         entry,
         setEntry,
-        searchEntries
+        searchEntries,
       }}
     >
       {props.children}
